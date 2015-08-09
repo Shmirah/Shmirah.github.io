@@ -7,6 +7,9 @@
 td {
 	vertical-align: top;
 }
+div.inline {
+	display: inline-block;
+}
 #schedule {
 	-webkit-transition: width 0.5s, margin 0.5s;
 	transition: width 0.5s, margin 0.5s;

@@ -13,25 +13,72 @@
 	</head>
 	<body>
 		<table style="width: 100%"><tr><td align="center">
-			<div style="width: 350px;">
-				<h1 style="margin-bottom: 50px;">Shmirah Scheduler</h1>
+			<div style="width: 450px;">
+				<h1 style="margin-bottom: 30px;">Shmirah Scheduler</h1>
 				<div style="text-align: start">
+					<div class="center-margin" style="text-align: center;">
+						<div class="btn-group" data-toggle="buttons">
+							<label class="btn btn-primary active">
+								<input type="radio" name="language" checked>English</input>
+							</label>
+							<label class="btn btn-primary">
+								<input type="radio" name="language">עברית</input>
+							</label>
+						</div>
+					</div>
 					<div class="center-margin">
 						<h4>Enter the names of who you want to schedule below:</h4>
 						<div id="names">
 							<div class="input-group input-margin">
+								<span class="input-group-btn" data-toggle="buttons">
+									<label class="btn btn-primary">
+										<input type="checkbox" class="miktzoi">Miktzoi</input>
+									</label>
+								</span>
 								<input type="text" class="form-control inputName" placeholder="Jon Weinreich">
 								<span class="input-group-btn">
 									<button class="btn btn-danger btn-default removeRow">&times;</button>
 								</span>
 							</div>
 							<div class="input-group input-margin">
+								<span class="input-group-btn" data-toggle="buttons">
+									<label class="btn btn-primary">
+										<input type="checkbox" class="miktzoi">Miktzoi</input>
+									</label>
+								</span>
 								<input type="text" class="form-control inputName" placeholder="Jon Weinreich">
 								<span class="input-group-btn">
 									<button class="btn btn-danger btn-default removeRow">&times;</button>
 								</span>
 							</div>
 							<div class="input-group input-margin">
+								<span class="input-group-btn" data-toggle="buttons">
+									<label class="btn btn-primary">
+										<input type="checkbox" class="miktzoi">Miktzoi</input>
+									</label>
+								</span>
+								<input type="text" class="form-control inputName" placeholder="Jon Weinreich">
+								<span class="input-group-btn">
+									<button class="btn btn-danger btn-default removeRow">&times;</button>
+								</span>
+							</div>
+							<div class="input-group input-margin">
+								<span class="input-group-btn" data-toggle="buttons">
+									<label class="btn btn-primary">
+										<input type="checkbox" class="miktzoi">Miktzoi</input>
+									</label>
+								</span>
+								<input type="text" class="form-control inputName" placeholder="Jon Weinreich">
+								<span class="input-group-btn">
+									<button class="btn btn-danger btn-default removeRow">&times;</button>
+								</span>
+							</div>
+							<div class="input-group input-margin">
+								<span class="input-group-btn" data-toggle="buttons">
+									<label class="btn btn-primary">
+										<input type="checkbox" class="miktzoi">Miktzoi</input>
+									</label>
+								</span>
 								<input type="text" class="form-control inputName" placeholder="Jon Weinreich">
 								<span class="input-group-btn">
 									<button class="btn btn-danger btn-default removeRow">&times;</button>
@@ -50,16 +97,17 @@
 							<input id="endDate" type="text" class="form-control" name="end"></input>
 						</div>
 					</div>
-					<div class="center-margin datepicker-inline">
-						<h4>Choose the in-in nights:</h4>
-						<div id="in-in" class="datepicker-inline" data-provide="datepicker-inline" data-date-multidate="true" data-date-clear-btn="true"></div>
+					<div id="inline" class="center-margin">
+						<h4>Choose the in-in nights and rotations:</h4>
+						<div id="in-in" class="inline" data-provide="datepicker-inline" data-date-multidate="true" data-date-clear-btn="true"></div>
+						<div id="rotations" class="inline" style="float: right; margin-right: -10px;" data-provide="datepicker-inline" data-date-multidate="true" data-date-clear-btn="true"></div>
 					</div>
 				</div>
 			</div>
 		</td><td align="center">
 			<div id="schedule" style="width: 0px">
 				<div id="downloadDiv" style="display: none; margin-bottom: 25px">
-					<h4 style="display: inline-block; margin-right: 25px;">Download schedule as Excel file:</h4>
+					<h4 style="display: inline-block; margin-right: 10px;">Download schedule as Excel file:</h4>
 					<button id="download" class="btn btn-sm btn-info">Download</button>
 				</div>
 			</div>
