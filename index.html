@@ -1,0 +1,70 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+	<head>
+		<meta charset="UTF-8">
+		<title>Shmirah Scheduler</title>
+		<script src="jquery-1.11.3.min.js"></script>
+		<script src="bootstrap.min.js"></script>
+		<script src="bootstrap-datepicker.min.js"></script>
+				
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="css/bootstrap-datepicker.min.css">
+		<link rel="stylesheet" type="text/css" href="css/style.css">
+	</head>
+	<body>
+		<table style="width: 100%"><tr><td align="center">
+			<div style="width: 350px;">
+				<h1 style="margin-bottom: 50px;">Shmirah Scheduler</h1>
+				<div style="text-align: start">
+					<div class="center-margin">
+						<h4>Enter the names of who you want to schedule below:</h4>
+						<div id="names">
+							<div class="input-group input-margin">
+								<input type="text" class="form-control inputName" placeholder="Jon Weinreich">
+								<span class="input-group-btn">
+									<button class="btn btn-danger btn-default removeRow">&times;</button>
+								</span>
+							</div>
+							<div class="input-group input-margin">
+								<input type="text" class="form-control inputName" placeholder="Jon Weinreich">
+								<span class="input-group-btn">
+									<button class="btn btn-danger btn-default removeRow">&times;</button>
+								</span>
+							</div>
+							<div class="input-group input-margin">
+								<input type="text" class="form-control inputName" placeholder="Jon Weinreich">
+								<span class="input-group-btn">
+									<button class="btn btn-danger btn-default removeRow">&times;</button>
+								</span>
+							</div>
+						</div>
+						<div class="form-group" style="text-align: right;">
+							<button id="addRow" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-plus"></span> Add Another Name</button>
+						</div>
+					</div>
+					<div class="center-margin">
+						<h4>Choose the start and end dates:</h4>
+						<div id="calendars" class="input-group input-daterange">
+							<input id="startDate" type="text" class="form-control" data-provide="datepicker" data-date-today-btn="true" data-date-autoclose="true" name="start"></input>
+							<span class="input-group-addon">to</span>
+							<input id="endDate" type="text" class="form-control" data-provide="datepicker" data-date-today-btn="true" data-date-autoclose="true" name="end"></input>
+						</div>
+					</div>
+					<div class="center-margin datepicker-inline">
+						<h4>Choose the in-in nights:</h4>
+						<div id="in-in" class="datepicker-inline" data-provide="datepicker-inline" data-date-multidate="true" data-date-clear-btn="true"></div>
+					</div>
+				</div>
+			</div>
+		</td><td align="center">
+			<div id="schedule" style="width: 0px">
+				<div id="downloadDiv" style="display: none; margin-bottom: 25px">
+					<h4 style="display: inline-block; margin-right: 25px;">Download schedule as Excel file:</h4>
+					<button id="download" class="btn btn-sm btn-info">Download</button>
+				</div>
+			</div>
+		</td></tr></table>
+			
+		<script src="init.js"></script>
+	</body>
+</html>

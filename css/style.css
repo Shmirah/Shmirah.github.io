@@ -1,0 +1,13 @@
+.center-margin {
+	margin: 0 auto 30px auto;
+}
+.input-margin {
+	margin-bottom: 5px;
+}
+td {
+	vertical-align: top;
+}
+#schedule {
+	-webkit-transition: width 0.5s, margin 0.5s;
+	transition: width 0.5s, margin 0.5s;
+}
