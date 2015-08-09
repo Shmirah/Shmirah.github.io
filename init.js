@@ -1,4 +1,5 @@
 $(function() {
+	$('#calendars').datepicker({todayBtn: 'linked', todayHighlight: true});
 	var data = [];
 	function createTable() {
 		$('#downloadDiv').hide();
@@ -101,9 +102,6 @@ $(function() {
 			}
 		}
 		$('#in-in').datepicker('setDates',dates);
-		var date = new Date(e.date);
-		date.setDate(date.getDate()+1);
-		$('#endDate').datepicker('setStartDate',date);
 		createTable();
 	});
 	$('#endDate').on('changeDate',function(e) {
@@ -116,9 +114,6 @@ $(function() {
 			}
 		}
 		$('#in-in').datepicker('setDates',dates);
-		var date = new Date(e.date);
-		date.setDate(date.getDate()-1);
-		$('#startDate').datepicker('setEndDate',date);
 		createTable();
 	});
 	$('#in-in').on('changeDate clearDate',function(e) {
