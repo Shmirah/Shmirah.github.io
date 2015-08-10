@@ -6,83 +6,46 @@
 		<script src="jquery-1.11.3.min.js"></script>
 		<script src="bootstrap.min.js"></script>
 		<script src="bootstrap-datepicker.min.js"></script>
+		<script src="bootstrap-datepicker.he.min.js"></script>
 				
 		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="css/bootstrap-datepicker.min.css">
 		<link rel="stylesheet" type="text/css" href="css/style.css">
 	</head>
 	<body>
-		<table style="width: 100%"><tr><td align="center">
+		<table style="width: 100%"><tr><td align="center" style="width: 100%;">
 			<div style="width: 450px;">
-				<h1 style="margin-bottom: 30px;">Shmirah Scheduler</h1>
+				<div class="page-header">
+					<h1>Shmirah Scheduler</h1>
+				</div>
 				<div style="text-align: start">
 					<div class="center-margin" style="text-align: center;">
 						<div class="btn-group" data-toggle="buttons">
 							<label class="btn btn-primary active">
-								<input type="radio" name="language" checked>English</input>
+								<input id="en" type="radio" name="language" checked />English
 							</label>
 							<label class="btn btn-primary">
-								<input type="radio" name="language">עברית</input>
+								<input id="he" type="radio" name="language" />עברית
 							</label>
 						</div>
 					</div>
 					<div class="center-margin">
 						<h4>Enter the names of who you want to schedule below:</h4>
-						<div id="names">
-							<div class="input-group input-margin">
-								<span class="input-group-btn" data-toggle="buttons">
-									<label class="btn btn-primary">
-										<input type="checkbox" class="miktzoi">Miktzoi</input>
-									</label>
-								</span>
-								<input type="text" class="form-control inputName" placeholder="Jon Weinreich">
-								<span class="input-group-btn">
-									<button class="btn btn-danger btn-default removeRow">&times;</button>
-								</span>
-							</div>
-							<div class="input-group input-margin">
-								<span class="input-group-btn" data-toggle="buttons">
-									<label class="btn btn-primary">
-										<input type="checkbox" class="miktzoi">Miktzoi</input>
-									</label>
-								</span>
-								<input type="text" class="form-control inputName" placeholder="Jon Weinreich">
-								<span class="input-group-btn">
-									<button class="btn btn-danger btn-default removeRow">&times;</button>
-								</span>
-							</div>
-							<div class="input-group input-margin">
-								<span class="input-group-btn" data-toggle="buttons">
-									<label class="btn btn-primary">
-										<input type="checkbox" class="miktzoi">Miktzoi</input>
-									</label>
-								</span>
-								<input type="text" class="form-control inputName" placeholder="Jon Weinreich">
-								<span class="input-group-btn">
-									<button class="btn btn-danger btn-default removeRow">&times;</button>
-								</span>
-							</div>
-							<div class="input-group input-margin">
-								<span class="input-group-btn" data-toggle="buttons">
-									<label class="btn btn-primary">
-										<input type="checkbox" class="miktzoi">Miktzoi</input>
-									</label>
-								</span>
-								<input type="text" class="form-control inputName" placeholder="Jon Weinreich">
-								<span class="input-group-btn">
-									<button class="btn btn-danger btn-default removeRow">&times;</button>
-								</span>
-							</div>
-							<div class="input-group input-margin">
-								<span class="input-group-btn" data-toggle="buttons">
-									<label class="btn btn-primary">
-										<input type="checkbox" class="miktzoi">Miktzoi</input>
-									</label>
-								</span>
-								<input type="text" class="form-control inputName" placeholder="Jon Weinreich">
-								<span class="input-group-btn">
-									<button class="btn btn-danger btn-default removeRow">&times;</button>
-								</span>
+						<div id="names" style="margin-bottom: 5px;">
+							<ul class="nav nav-tabs" role="tablist">
+								<li class="active" role="presentation"><a href="#tab1" aria-controls="tab1" role="tab" data-toggle="tab">1</a></li>
+								<li role="presentation"><a href="#tab2" aria-controls="tab2" role="tab" data-toggle="tab">2</a></li>
+								<li role="presentation"><a href="#tab3" aria-controls="tab3" role="tab" data-toggle="tab">3</a></li>
+								<li role="presentation"><a href="#tab4" aria-controls="tab4" role="tab" data-toggle="tab">4</a></li>
+								<li role="presentation"><a href="#tab5" aria-controls="tab5" role="tab" data-toggle="tab">5</a></li>
+								<li role="presentation"><a id="addTab" href="#">+</a></li>
+							</ul>
+							<div class="tab-content">
+								<div id="tab1" class="tab-pane active fade in" role="tabpanel"></div>
+								<div id="tab2" class="tab-pane fade" role="tabpanel"></div>
+								<div id="tab3" class="tab-pane fade" role="tabpanel"></div>
+								<div id="tab4" class="tab-pane fade" role="tabpanel"></div>
+								<div id="tab5" class="tab-pane fade" role="tabpanel"></div>
 							</div>
 						</div>
 						<div class="form-group" style="text-align: right;">
@@ -92,20 +55,42 @@
 					<div class="center-margin">
 						<h4>Choose the start and end dates:</h4>
 						<div id="calendars" class="input-group input-daterange">
-							<input id="startDate" type="text" class="form-control" name="start"></input>
+							<input id="startDate" type="text" class="form-control" name="start" />
 							<span class="input-group-addon">to</span>
-							<input id="endDate" type="text" class="form-control" name="end"></input>
+							<input id="endDate" type="text" class="form-control" name="end" />
+						</div>
+						<div id="calendarsHE" style="display: none;" class="input-group input-daterange">
+							<input id="startDateHE" type="text" class="form-control" name="start" />
+							<span class="input-group-addon">עד</span>
+							<input id="endDateHE" type="text" class="form-control" name="end" />
 						</div>
 					</div>
 					<div id="inline" class="center-margin">
 						<h4>Choose the in-in nights and rotations:</h4>
-						<div id="in-in" class="inline" data-provide="datepicker-inline" data-date-multidate="true" data-date-clear-btn="true"></div>
-						<div id="rotations" class="inline" style="float: right; margin-right: -10px;" data-provide="datepicker-inline" data-date-multidate="true" data-date-clear-btn="true"></div>
+						<div class="inline">
+							<h5>In-In Nights</h5>
+							<div id="in-in" data-provide="datepicker-inline" data-date-multidate="true" data-date-clear-btn="true"></div>
+						</div>
+						<div class="inline" style="float: right; margin-right: -10px;">
+							<h5>Rotations</h5>
+							<div id="rotations" data-provide="datepicker-inline" data-date-multidate="true" data-date-clear-btn="true"></div>
+						</div>
+					</div>
+					<div id="inlineHE" style="display: none;" class="center-margin">
+						<h4>Choose the in-in nights and rotations:</h4>
+						<div class="inline">
+							<h5>In-In Nights</h5>
+							<div id="in-inHE" data-provide="datepicker-inline" data-date-language="he" data-date-multidate="true" data-date-clear-btn="true"></div>
+						</div>
+						<div class="inline" style="float: right;">
+							<h5>Rotations</h5>
+							<div id="rotationsHE" data-provide="datepicker-inline" data-date-language="he" data-date-multidate="true" data-date-clear-btn="true"></div>
+						</div>
 					</div>
 				</div>
 			</div>
 		</td><td align="center">
-			<div id="schedule" style="width: 0px">
+			<div id="schedule">
 				<div id="downloadDiv" style="display: none; margin-bottom: 25px">
 					<h4 style="display: inline-block; margin-right: 10px;">Download schedule as Excel file:</h4>
 					<button id="download" class="btn btn-sm btn-info">Download</button>

@@ -4,13 +4,38 @@
 .input-margin {
 	margin-bottom: 5px;
 }
+h5 {
+	text-align: center;
+}
 td {
 	vertical-align: top;
+	-webkit-transition: width 0.5s;
+	-moz-transition: width 0.5s;
+	-ms-transition: width 0.5s;
+	-o-transition: width 0.5s;
+	transition: width 0.5s;
 }
 div.inline {
 	display: inline-block;
 }
+.nav-tabs {
+	border-bottom: 0;
+}
+.nav>li>a {
+	padding: 10px 10px;
+}
+.tab-pane {
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	padding: 7px 7px 2px 7px;
+}
+.tab-content>.tab-pane:first-child {
+	border-radius: 0 4px 4px 4px;
+}
 #schedule {
 	-webkit-transition: width 0.5s, margin 0.5s;
+	-moz-transition: width 0.5s, margin 0.5s;
+	-ms-transition: width 0.5s, margin 0.5s;
+	-o-transition: width 0.5s, margin0.5s;
 	transition: width 0.5s, margin 0.5s;
 }
