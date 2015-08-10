@@ -6,7 +6,14 @@ $(function() {
 	var $shownTemp
 	var clearable;
 	var data = [];
-	function createTable() {
+	Date.prototype.toDateString = function() {
+		var date = this.toString();
+		return date.substr(0,3)+' - '+date.substr(4,6)+', '+date.substr(11,4)
+	}
+	Date.prototype.toHebrewDateString = function() {
+		return $.fn.datepicker.dates.he.days[this.getDay()]+' - '+('0'+this.getDate()).substr(-2)+' '+$.fn.datepicker.dates.he.monthsShort[this.getMonth()]+', '+(1900+this.getYear());
+	}
+	function createTable(forceFade) {
 		$('#downloadDiv').hide();
 		$('#schedule table').remove();
 		data = [];
@@ -114,40 +121,78 @@ $(function() {
 					allNames.push(col);
 				}
 				$('#schedule table').remove();
-				var table = '<table class="table table-hover table-striped table-condensed" style="display: none;">';
-				if(lang==='en') table += '<thead><tr><th>Date</th>';
-				else table += '<thead><tr><th>Date</th>';
-				for(var i = 0;i < allNames.length;i++) {
-					if(lang==='en') table += '<th>Name</th>';
-					else table += '<th>שם</th>';
-				}
-				if(lang==='en') table += '<th>In-In Night</th><th>Rotations</th></tr></thead><tbody id="tbody">';
-				else table += '<th>In-In Night</th><th>Rotations</th></tr></thead><tbody id="tbody">';
 				var excelRow = [];
+				var table = '<table class="table table-hover table-striped table-condensed" style="display: none;">';
+				if(lang==='en') {
+					excelRow.push('Date');
+					table += '<thead><tr><th>Date</th>';
+				} else { //rotations, in-in nights
+					excelRow.push('לילות בצריף','רוטציות');
+					table += '<thead><tr><th class="he">רוטציות</th><th class="he">לילות בצריף</th>';
+				}
+				for(var i = 0;i < allNames.length;i++) {
+					if(lang==='en') {
+						excelRow.push('Name');
+						table += '<th>Name</th>';
+					} else {
+						excelRow.push('שם');
+						table += '<th class="he">שם</th>';
+					}
+				}
+				if(lang==='en') {
+					excelRow.push('In-In Night','Rotations');
+					table += '<th>In-In Night</th><th>Rotations</th></tr></thead><tbody id="tbody">';
+				} else{ //date
+					excelRow.push('תאריך');
+					table += '<th class="he">תאריך</th></tr></thead><tbody id="tbody">';
+				}
+				data.push(excelRow);
 				var inindateCount = 0;
 				var rotationdateCount = 0;
 				var curr = new Date(start);
 				var diff = Math.round((Date.parse(end) - Date.parse(start))/86400000);
 				for(var i = 0;i <= diff;i++) {
-					excelRow.push(curr.toDateString());
-					table += '<tr><td>'+curr.toDateString()+'</td>';
-					for(var j = 0;j < allNames.length;j++) {
-						excelRow.push(allNames[j][i]);
-						table += '<td>'+allNames[j][i]+'</td>';
+					excelRow = [];
+					if(lang==='en') {
+						excelRow.push('"'+curr.toDateString()+'"');
+						table += '<tr><td>'+curr.toDateString()+'</td>';
+						for(var j = 0;j < allNames.length;j++) {
+							excelRow.push('"'+allNames[j][i]+'"');
+							table += '<td>'+allNames[j][i]+'</td>';
+						}
+					} else {
+						table += '<tr>';
 					}
 					if(ininDates[inindateCount] && ininDates[inindateCount].toDateString()==curr.toDateString()) {
-						excelRow.push('Yes');
-						if(lang==='en') table += '<td>Yes</td><td></td>';
-						else table += '<td>Yes</td><td></td>';
+						if(lang==='en') {
+							excelRow.push('Yes'); excelRow.push('');
+							table += '<td>Yes</td><td></td>';
+						} else {
+							excelRow.push(''); excelRow.push('כן');
+							table += '<td class="he">כן</td><td></td>';
+						}
 						inindateCount++;
 					} else if(rotationDates[rotationdateCount] && rotationDates[rotationdateCount].toDateString()==curr.toDateString()) {
-						excelRow.push(''); excelRow.push('Yes');
-						if(lang==='en') table += '<td></td><td>Yes</td>';
-						else table += '<td></td><td>Yes</td>';
+						if(lang==='en') {
+							excelRow.push(''); excelRow.push('Yes');
+							table += '<td></td><td>Yes</td>';
+						} else {
+							excelRow.push('כן'); excelRow.push('');
+							table += '<td></td><td class="he">כן</td>';
+						}
 						rotationdateCount++;
 					} else {
+						excelRow.push(''); excelRow.push('');
 						if(lang==='en') table += '<td></td><td></td>';
 						else table += '<td></td><td></td>';
+					}
+					if(lang==='he') {
+						for(var j = allNames.length-1;j >= 0;j--) {
+							excelRow.push('"'+allNames[j][i]+'"');
+							table += '<td>'+allNames[j][i]+'</td>';
+						}
+						excelRow.push('"'+curr.toHebrewDateString()+'"');
+						table += '<td>'+curr.toHebrewDateString()+'</td>';
 					}
 					data.push(excelRow);
 					table += '</tr>';
@@ -163,44 +208,44 @@ $(function() {
 					$('#schedule table').show();
 				}
 			}
-			if($('td').first().width()>505) {
+			if($('#options').width()>510) {
 				if(clearable) return;
 				if(!$shownTemp) $shownTemp = $shown;
 				if($shown) $shown.datepicker('hide');
-				clearable = true;
-				$('td').first().css('width',(50000/window.outerWidth)+'%');
+				$('#options').css('width',(50000/window.outerWidth)+'%');
 				$('#schedule').css('margin','20px 25px');
 				clearTimeout(clearable);
 				clearable = setTimeout(function backToNorm($shown) {
-					if($('td').first().width()>505) return clearable = setTimeout(backToNorm,50,$shown);
+					if($('#options').width()>510) return clearable = setTimeout(backToNorm,51,$shown);
+					clearable = false;
 					if($shown) $shown.datepicker('show');
 					$shownTemp = false;
 					$(window).off('resize').resize(function() {
-						$('td').first().css('width',(50000/window.outerWidth)+'%');
+						$('#options').css('width',(50000/window.outerWidth)+'%');
 					})
 					makeTable(true);
-				}, 50, $shownTemp);
+				}, 51, $shownTemp);
 			} else {
-				makeTable();
+				makeTable(forceFade);
 			}
 		}
 	}
 	$('#download').click(function() {
 		if(data.length) {
-			/*var csvString = data.join('\r\n');
+			var csvString = data.join('\r\n');
 			var a = document.createElement('a');
 			a.href = 'data:attachment/csv,' + encodeURIComponent(csvString);
 			a.target = '_blank';
-			a.download = 'ShmirahSchedule.csv';
-			a.click();*/
+			a.download = (lang==='en' ? 'ShmirahSchedule' : 'תוכניתשמירה')+'.csv';
+			a.click();
 			
-			$('#schedule table').wrap('<div id="tableWrap">');
+			/*$('#schedule table').wrap('<div id="tableWrap">');
 			var url='data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,' + encodeURIComponent($('#tableWrap').html());
 			$('#schedule table').unwrap();
 			var a = document.createElement('a');
 			a.href = url;
-			a.download = 'ShmirahSchedule.xls';
-			a.click();
+			a.download = (lang==='en' ? 'ShmirahSchedule' : 'תוכניתשמירה')+'.xls';
+			a.click();*/
 			
 			/*var uri = 'data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,'
 			, template = '<html xmlns:x="urn:schemas-microsoft-com:office:excel"><head><meta http-equiv="Content-Type" content="text/html;charset=windows-1252"><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:Panes></x:Panes><x:DisplayGridlines /><x:Print><x:Gridlines /></x:Print></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--><meta http-equiv="content-type" content="text/plain; charset=UTF-8"/></head><body><table>{table}</table></body></html>'
@@ -210,7 +255,7 @@ $(function() {
 			var ctx = {worksheet: 'Worksheet', table: table.innerHTML}
 			var a = document.createElement('a');
 			a.href = uri + base64(format(template, ctx));
-			a.download = 'ShmirahSchedule.xls';
+			a.download = (lang==='en' ? 'ShmirahSchedule' : 'תוכניתשמירה')+'.xls';
 			a.click();*/
 		}
 	});
@@ -337,14 +382,7 @@ $(function() {
 	$('#in-in, #in-inHE, #rotations, #rotationsHE').on('clearDate',function(e) {
 		createTable();
 	});
-	$('#startDate, #endDate').on('show',function() {
-		$shown = $(this);
-	}).on('hide',function() {
-		$shown = false;
-	});
-	$('#startDateHE, #endDateHE').on('show', function() {
-		//var mod = this.id==='startDateHE' ? -250 : 250;
-		//$('.datepicker-dropdown').css('left',(parseInt($('.datepicker-dropdown').css('right'))+mod)+'px');
+	$('#startDate, #startDateHE, #endDate, #endDateHE').on('show',function() {
 		$shown = $(this);
 	}).on('hide',function() {
 		$shown = false;
@@ -355,21 +393,80 @@ $(function() {
 			$('.miktzoi').parent().each(function() {
 				this.childNodes[1].nodeValue = 'Miktzoi';
 			});
-			$('#download').text('Download');
+			$('h1').text('Shmirah Scheduler');
+			$('h4').eq(1).removeClass('he').text('Enter the names of who you want to schedule below:');
+			$('h4').eq(2).removeClass('he').text('Choose the start and end dates:');
+			$('h4').first().text('Download schedule as Excel file:');
+			$('#addRow').html('<span class="glyphicon glyphicon-plus"></span> Add Another Name');
 			$('#calendarsHE').hide();
 			$('#calendars').show();
 			$('#inlineHE').hide();
 			$('#inline').show();
+			if($('#options').width()<510) {
+				$('#downloadDiv').fadeOut();
+				$('#schedule table').fadeOut(function() {
+					$('#schedule').css('margin','0');
+					$('#download').text('Download');
+					$('#download').parent().append($('#download'));
+					$('#options').css('transition-timing-function','linear');
+					$('#options').width('100%');
+					setTimeout(function wait() {
+						if($('#options').width()+5<window.outerWidth) return setTimeout(wait,51);
+						$('#options').after($('#table'));
+						$('#options').css('transition-timing-function','ease');
+						$('#options').width((50000/window.outerWidth)+'%');
+						$('#schedule').css('margin','20px 25px');
+						setTimeout(function wait2() {
+							if($('#options').width()>510) return setTimeout(wait2,51);
+							createTable(true);
+						}, 51);
+					}, 51);
+				});
+			} else {
+				$('#download').text('Download');
+				$('#download').parent().append($('#download'));
+				$('#options').after($('#table'));
+				createTable();
+			}
 		} else {
 			$('.miktzoi').parent().each(function() {
 				this.childNodes[1].nodeValue = 'מקצועי';
 			});
-			$('#download').text('להורדה');
+			$('h1').text('תוכנית שמירה');
+			$('h4').eq(0).addClass('he').text(':הכנס את השמות של האנשים בסבב השמירה למלבן מתחת');
+			$('h4').eq(1).addClass('he').text(':בחר את תאריך ההתחלה ותאריך הסוף');
+			$('h4').last().text(':הורד את התוכנית כקובץ אקסל');
+			$('#addRow').html('הוספת שם אחר <span class="glyphicon glyphicon-plus"></span>');
 			$('#calendars').hide();
 			$('#calendarsHE').show();
 			$('#inline').hide();
 			$('#inlineHE').show();
+			if($('#options').width()<510) {
+				$('#downloadDiv').fadeOut();
+				$('#schedule table').fadeOut(function() {
+					$('#schedule').css('margin','0');
+					$('#download').text('להורדה');
+					$('#download').parent().prepend($('#download'));
+					$('#options').css('transition-timing-function','linear');
+					$('#options').width('100%');
+					setTimeout(function wait() {
+						if($('#options').width()+5<window.outerWidth) return setTimeout(wait,51);
+						$('#table').after($('#options'));
+						$('#options').css('transition-timing-function','ease');
+						$('#options').width((50000/window.outerWidth)+'%');
+						$('#schedule').css('margin','20px 25px');
+						setTimeout(function wait2() {
+							if($('#options').width()>510) return setTimeout(wait2,51);
+							createTable(true);
+						}, 51);
+					}, 51);
+				});
+			} else {
+				$('#download').text('להורדה');
+				$('#download').parent().prepend($('#download'));
+				$('#table').after($('#options'));
+				createTable();
+			}
 		}
-		createTable();
 	});
 });

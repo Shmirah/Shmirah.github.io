@@ -7,7 +7,7 @@
 h5 {
 	text-align: center;
 }
-td {
+#options, #table {
 	vertical-align: top;
 	-webkit-transition: width 0.5s;
 	-moz-transition: width 0.5s;
@@ -32,10 +32,29 @@ div.inline {
 .tab-content>.tab-pane:first-child {
 	border-radius: 0 4px 4px 4px;
 }
+.he {
+	text-align: right;
+}
 #schedule {
-	-webkit-transition: width 0.5s, margin 0.5s;
-	-moz-transition: width 0.5s, margin 0.5s;
-	-ms-transition: width 0.5s, margin 0.5s;
-	-o-transition: width 0.5s, margin0.5s;
-	transition: width 0.5s, margin 0.5s;
+	-webkit-transition: opacity 0.4s, margin 0.5s;
+	-moz-transition: opacity 0.4s, margin 0.5s;
+	-ms-transition: opacity 0.4s, margin 0.5s;
+	-o-transition: opacity 0.4s, margin0.5s;
+	transition: opacity 0.4s, margin 0.5s;
+}
+#schedule table {
+	border-collapse: collapse;
+}
+#schedule tr {
+	border: none;
+}
+#schedule td {
+	border-right: 1px solid #ddd;
+	border-left: 1px solid #ddd;
+}
+#schedule td:first-child {
+	border-left: none;
+}
+#schedule td:last-child {
+	border-right: none;
 }
